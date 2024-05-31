@@ -49,12 +49,24 @@ public class Hero {
 
     public void levelUp() {
         this.lvl = lvl + 1;
-        this.healthPoints = (int)( healthPoints * 3.3 ) / 2;
+        this.healthPoints = (int)( healthPoints * 2.8 ) / 2;
         this.magicPoints = magicPoints + 5;
         this.damage = (int)(( damage * 3 ) / 1.8);
     }
 
     public String toString() {
-        return getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", and their damage is: " + getDamage()+ ".";
+        return getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage() + " and their experience points are currently: " + getExpPoints() + ".";
+    }
+
+    public int receiveDamage(int damageTaken) {
+        return healthPoints -= damageTaken;
+    }
+
+    public int expReceived(int expGiven) {
+        return expPoints += expGiven;
+    }
+
+    public int resetExp() {
+        return expPoints = 0;
     }
 }
