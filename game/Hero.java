@@ -53,10 +53,10 @@ public class Hero {
         return enemiesDefeated;
     }
 
-    public void levelUp() {
+    public void levelUp(int leftovers) {
         this.lvl = lvl + 1;
-        this.healthPoints = (int)( healthPoints * 4.5 ) / 2;
-        this.magicPoints = magicPoints + 5;
+        this.healthPoints = (int)( healthPoints * 5 ) / 2;
+        this.magicPoints = magicPoints + 10;
         this.damage = (int)(( damage * 3 ) / 1.8);
         //if level two, add freeze spell to list
         if (this.getLvl() == 2) {
@@ -67,6 +67,10 @@ public class Hero {
             spellsList.add("Fire");
         }
         this.resetExp();
+        this.expPoints = leftovers;
+        System.out.println(".............................................\n");
+        System.out.println(".............................................\n");
+        System.out.println(this.toString());
     }
 
     public List<String> getSpellsList() {
@@ -74,9 +78,9 @@ public class Hero {
     }
 
     public void castFreezeSpell() {
-        if (this.magicPoints > 8) {
+        if (this.magicPoints > 9) {
             System.out.println(this.getName() + " has cast freeze spell!");
-            this.magicPoints -= 9;
+            this.magicPoints -= 10;
             System.out.println("Enemy is hit with frost! Damage is halved!");
         } else {
             System.out.println("Not enough magic points!");
@@ -87,7 +91,7 @@ public class Hero {
         if (this.magicPoints > 14) {
             System.out.println(this.getName() + " has cast fire spell!");
             this.magicPoints -= 15;
-            System.out.println("Enemy has been hit with fire!");
+            System.out.println("Enemy has been burnt!");
         } else {
             System.out.println("Not enough magic points!");
         }
@@ -104,7 +108,8 @@ public class Hero {
     public void receiveExp(int expGiven) {
         expPoints += expGiven;
         if (expPoints >= 100) {
-            this.levelUp();
+            int leftovers = expPoints - 100;
+            this.levelUp(leftovers);
         }
     }
 
