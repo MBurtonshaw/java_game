@@ -1,5 +1,5 @@
 public class Monster {
-    // hp dmg expgiven name
+
     private String name;
     private int healthPoints;
     private int damage;
@@ -34,6 +34,14 @@ public class Monster {
 
     public int receiveDamage(int damageTaken) {
         return this.healthPoints -= damageTaken;
+    }
+
+    public void takeFreezeDamage() {
+        this.damage = damage / 2;
+    }
+
+    public void takeFireDamage() {
+        this.healthPoints = 0;
     }
 
     public int checkIfDead() {

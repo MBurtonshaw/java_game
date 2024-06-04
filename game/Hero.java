@@ -8,19 +8,21 @@ public class Hero {
     private int healthPoints;
     private int magicPoints;
     private int expPoints = 0;
-    //private List<String> spellsList = new ArrayList<>();
+    private List<String> spellsList = new ArrayList<>();
     private int damage = 10;
+    private int enemiesDefeated;
 
     //hero needs exp bar, spells list, damage, run feature, hit feature
 
-    public Hero(String name, int lvl, int healthPoints, int magicPoints, int expPoints, int damage /*List<String> spellsList*/) {
+    public Hero(String name, int lvl, int healthPoints, int magicPoints, int expPoints, List<String> spellsList, int damage, int enemiesDefeated ) {
         this.name = name;
         this.lvl = lvl;
         this.healthPoints = healthPoints;
         this.magicPoints = magicPoints;
         this.expPoints = expPoints;
-        //this.spellsList = spellsList;
+        this.spellsList = spellsList;
         this.damage = damage;
+        this.enemiesDefeated = enemiesDefeated;
     }
 
     public String getName() {
@@ -47,26 +49,71 @@ public class Hero {
         return damage;
     }
 
+    public int getEnemiesDefeated() {
+        return enemiesDefeated;
+    }
+
     public void levelUp() {
         this.lvl = lvl + 1;
-        this.healthPoints = (int)( healthPoints * 2.8 ) / 2;
+        this.healthPoints = (int)( healthPoints * 4.5 ) / 2;
         this.magicPoints = magicPoints + 5;
         this.damage = (int)(( damage * 3 ) / 1.8);
+        //if level two, add freeze spell to list
+        if (this.getLvl() == 2) {
+            spellsList.add("Freeze");
+        }
+        //if level three, add fire spell to list
+        if (this.getLvl() == 3) {
+            spellsList.add("Fire");
+        }
+        this.resetExp();
+    }
+
+    public List<String> getSpellsList() {
+        return spellsList;
+    }
+
+    public void castFreezeSpell() {
+        if (this.magicPoints > 8) {
+            System.out.println(this.getName() + " has cast freeze spell!");
+            this.magicPoints -= 9;
+            System.out.println("Enemy is hit with frost! Damage is halved!");
+        } else {
+            System.out.println("Not enough magic points!");
+        }
+    }
+
+    public void castFireSpell() {
+        if (this.magicPoints > 14) {
+            System.out.println(this.getName() + " has cast fire spell!");
+            this.magicPoints -= 15;
+            System.out.println("Enemy has been hit with fire!");
+        } else {
+            System.out.println("Not enough magic points!");
+        }
     }
 
     public String toString() {
-        return getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage() + " and their experience points are currently: " + getExpPoints() + ".";
+        return getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage() + " and their experience points are currently: " + getExpPoints() + ". They have the " + getSpellsList() + " spells.";
     }
 
     public int receiveDamage(int damageTaken) {
         return healthPoints -= damageTaken;
     }
 
-    public int expReceived(int expGiven) {
-        return expPoints += expGiven;
+    public void receiveExp(int expGiven) {
+        expPoints += expGiven;
+        if (expPoints >= 100) {
+            this.levelUp();
+        }
     }
 
     public int resetExp() {
         return expPoints = 0;
     }
+
+    public int defeatEnemy() {
+        return enemiesDefeated += 1;
+    }
+
 }
