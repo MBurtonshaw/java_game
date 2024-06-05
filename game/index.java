@@ -5,17 +5,20 @@ import java.util.ArrayList;
 class Index {
     public static void main(String[] args) {
 
-        System.out.println("/////////////////////////////////////////////////////////");
-        System.out.println("/*******************************************************/");
-        System.out.println("/**************	 WELCOME HERO,  ************************/");
-        System.out.println("/*************	 TO ... GAME ...  **********************/");
-        System.out.println("/*******************************************************/");
-        System.out.println("/////////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println("/*************************************************************************************/");
+        System.out.println("/******************************	 WELCOME HERO,    ************************************/");
+        System.out.println("/****************************	 TO ... THE GAME ...  ********************************/");
+        System.out.println("/*************************************************************************************/");
+        System.out.println("///////////////////////////////////////////////////////////////////////////////////////");
 
         /* ////////// */
         /* Initializing scanner, getting user input for name, initializing Hero */
         /* ////////// */
         Scanner userInput = new Scanner(System.in);
+        System.out.println(" ... ");
+        System.out.println(" ... ");
+        System.out.println(" ...\n");
         System.out.println("uhhhh, could you remind me of your name?");
         String name = userInput.nextLine();
         List<String> someList = new ArrayList<>();
@@ -49,26 +52,30 @@ class Index {
         /* ////////// */
         /* Fourth battle */
         /* ////////// */
-        Monster monster4 = new Monster("Gary", 55, 17, 75);
-        System.out.println(monster4.appear());
-        getAction(hero1, monster4);
-        System.out.println(".............................................\n");
+        if (hero1.getHealthPoints() > 0) {
+            Monster monster4 = new Monster("Gary", 55, 17, 75);
+            System.out.println(monster4.appear());
+            getAction(hero1, monster4);
+            System.out.println(".............................................\n");
+        }
 
         /* ////////// */
         /* Fifth battle */
         /* ////////// */
-        Monster monster5 = new Monster("Mary", 65, 20, 100);
-        System.out.println(monster5.appear());
-        getAction(hero1, monster5);
-        System.out.println(".............................................\n");
+        if (hero1.getHealthPoints() > 0) {
+            Monster monster5 = new Monster("Mary", 65, 20, 100);
+            System.out.println(monster5.appear());
+            getAction(hero1, monster5);
+            System.out.println(".............................................\n");
 
-        /* ////////// */
-        /* Win condition */
-        /* ////////// */
-        if (hero1.getHealthPoints() > 0 && monster5.getHealthPoints() <= 0) {
-            System.out
-                    .println(hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated() + 1) + " enemies!!!");
-            System.out.println("The kingdom is again at peace...");
+            /* ////////// */
+            /* Win condition */
+            /* ////////// */
+            if (hero1.getHealthPoints() > 0 && monster5.getHealthPoints() <= 0) {
+                System.out.println(
+                        hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated() + 1) + " enemies!!!");
+                System.out.println("The kingdom is again at peace...");
+            }
         }
     }
 
@@ -100,7 +107,6 @@ class Index {
                         System.out.println("///////// " + hero.getName() + " has gained " + monster.getExpGiven()
                                 + " exp points!");
                         hero.receiveExp(monster.getExpGiven());
-                        System.out.println(".............................................\n");
                         hero.defeatEnemy();
                     }
                     //////////////
@@ -145,7 +151,6 @@ class Index {
                         System.out.println("///////// " + hero.getName() + " has gained " + monster.getExpGiven()
                                 + " exp points!");
                         hero.receiveExp(monster.getExpGiven());
-                        System.out.println(".............................................\n");
                         hero.defeatEnemy();
                     }
                     //////////////
@@ -186,7 +191,6 @@ class Index {
                         System.out.println("///////// " + hero.getName() + " has gained " + monster.getExpGiven()
                                 + " exp points!");
                         hero.receiveExp(monster.getExpGiven());
-                        System.out.println(".............................................\n");
                         hero.defeatEnemy();
                     }
                     //////////////
@@ -199,7 +203,6 @@ class Index {
             if (hero.getHealthPoints() < 1) {
                 System.out.println("////// " + hero.getName() + " has been defeated!!");
                 System.out.println("///////// Number of enemies defeated: " + (hero.getEnemiesDefeated()));
-                break;
             }
         } while (hero.getHealthPoints() > 0 && monster.getHealthPoints() > 0);
 
