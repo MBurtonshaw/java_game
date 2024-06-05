@@ -21,11 +21,9 @@ class Index {
         System.out.println(hero1.toString());
         
         System.out.println(".............................................\n");        Monster monster1 = new Monster("Barry", 20, 5, 50);
-        System.out.println(monster1.appear());
+        System.out.println("/// " + monster1.appear());
 
-        getAction(hero1, monster1);
-
-        System.out.println(".............................................\n");        
+        getAction(hero1, monster1);     
         
         System.out.println(".............................................\n");        
         Monster monster2 = new Monster("Larry", 30, 10, 50);
@@ -41,14 +39,12 @@ class Index {
         Monster monster4 = new Monster("Gary", 55, 17, 75);
         System.out.println(monster4.appear());
         getAction(hero1, monster4);
-        System.out.println(".............................................\n.......................................\n............................................");
+        System.out.println(".............................................\n");
     
-        System.out.println(".............................................\n.......................................\n............................................");
-        System.out.println(".............................................\n.......................................\n............................................");
         Monster monster5 = new Monster("Mary", 65, 20, 100);
         System.out.println(monster5.appear());
         getAction(hero1, monster5);
-        System.out.println(".............................................\n.......................................\n............................................");
+        System.out.println(".............................................\n");
         if (hero1.getHealthPoints() > 0 && monster5.getHealthPoints() <= 0) {
             System.out.println(hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated() + 1) + " enemies!!!");
             System.out.println("The kingdom is again at peace...");
@@ -61,27 +57,24 @@ class Index {
         do {
             if (hero.getLvl() > 2) {
                 System.out.println("1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP)");
-                System.out.println(".............................................\n");
                 int decision = userInput.nextInt();
                 if (decision == 1) {
                     monster.receiveDamage(hero.getDamage());
-                    System.out.println(monster.getName() + " receives " + hero.getDamage() + " points of damage!");
-                    System.out.println(".............................................\n.......................................\n............................................");
+                    System.out.println("/// " + monster.getName() + " receives " + hero.getDamage() + " points of damage!");
                     if (monster.getHealthPoints() > 0) {
                         hero.receiveDamage(monster.getDamage());
-                        System.out.println(monster.getName() + " attacks!");
-                        System.out.println(hero.getName() + " receives " + monster.getDamage() + " points of damage!");
-                        System.out.println(".............................................\n.......................................\n............................................");
+                        System.out.println("////// " + monster.getName() + " attacks!");
+                        System.out.println("///////// " + hero.getName() + " receives " + monster.getDamage() + " points of damage!");
+                        System.out.println(".............................................\n");
                     } else {
-                        System.out.println(monster.getName() + " has been defeated!");
-                        System.out.println(hero.getName() + " has gained " + monster.getExpGiven() + " exp points!");
+                        System.out.println("////// " + monster.getName() + " has been defeated!");
+                        System.out.println("///////// " + hero.getName() + " has gained " + monster.getExpGiven() + " exp points!");
                         hero.receiveExp(monster.getExpGiven());
-                        System.out.println(".............................................\n.......................................\n............................................");
+                        System.out.println(".............................................\n");
                         hero.defeatEnemy();
                     }
                 } else if (decision == 2) {
-                    System.out.println(hero.getName() + " has run away from " + monster.getName() + "!");
-                    System.out.println(".............................................\n.......................................\n............................................");
+                    System.out.println("////// " + hero.getName() + " has run away from " + monster.getName() + "!");
                     break;
                 } else if (decision == 3) {
                     hero.castFreezeSpell();
@@ -90,12 +83,12 @@ class Index {
                     if (hero.getMagicPoints() >= 15) {
                         hero.castFireSpell();
                         monster.takeFireDamage();
-                        System.out.println(monster.getName() + " has been defeated!");
+                        System.out.println("////// " + monster.getName() + " has been defeated!");
                     } else {
-                        System.out.println("Not enough magic points!");
+                        System.out.println("/// Not enough magic points!");
                     }
                 } else {
-                    System.out.println("Please enter a valid option");
+                    System.out.println("/// Please enter a valid option");
                 }
             } else if (hero.getLvl() > 1) {
                 System.out.println("1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)");
@@ -103,63 +96,61 @@ class Index {
                 int decision = userInput.nextInt();
                 if (decision == 1) {
                     monster.receiveDamage(hero.getDamage());
-                    System.out.println(monster.getName() + " receives " + hero.getDamage() + " points of damage!");
-                    System.out.println(".............................................\n.......................................\n............................................");
+                    System.out.println("/// " + monster.getName() + " receives " + hero.getDamage() + " points of damage!");
                     if (monster.getHealthPoints() > 0) {
                         hero.receiveDamage(monster.getDamage());
-                        System.out.println(monster.getName() + " attacks!");
-                        System.out.println(hero.getName() + " receives " + monster.getDamage() + " points of damage!");
-                        System.out.println(".............................................\n.......................................\n............................................");
+                        System.out.println("////// " + monster.getName() + " attacks!");
+                        System.out.println("///////// " + hero.getName() + " receives " + monster.getDamage() + " points of damage!");
+                        System.out.println(".............................................\n");
                     } else {
-                        System.out.println(monster.getName() + " has been defeated!");
-                        System.out.println(hero.getName() + " has gained " + monster.getExpGiven() + " exp points!");
+                        System.out.println("////// " + monster.getName() + " has been defeated!");
+                        System.out.println("///////// " + hero.getName() + " has gained " + monster.getExpGiven() + " exp points!");
                         hero.receiveExp(monster.getExpGiven());
-                        System.out.println(".............................................\n.......................................\n............................................");
+                        System.out.println(".............................................\n");
                         hero.defeatEnemy();
                     }
                 } else if (decision == 2) {
-                    System.out.println(hero.getName() + " has run away from " + monster.getName() + "!");
-                    System.out.println(".............................................\n.......................................\n............................................");
+                    System.out.println("////// " + hero.getName() + " has run away from " + monster.getName() + "!");
+                    System.out.println(".............................................\n");
                     break;
                 } else if (decision == 3) {
                     if (hero.getMagicPoints() > 9) {
                         hero.castFreezeSpell();
                         monster.takeFreezeDamage();
                     } else {
-                        System.out.println("Not enough magic points!");
+                        System.out.println("/// Not enough magic points!");
                     }
                 } else {
-                    System.out.println("Please enter a valid option");
+                    System.out.println("/// Please enter a valid option");
                 }
             } else {
                 System.out.println("1 - Attack  ||  2 - Run");
-                System.out.println(".............................................\n");
                 int decision = userInput.nextInt();
                 if (decision == 1) {
                     monster.receiveDamage(hero.getDamage());
-                    System.out.println(monster.getName() + " receives " + hero.getDamage() + " points of damage!");
-                    System.out.println(".............................................\n.......................................\n............................................");
+                    System.out.println("/// " + monster.getName() + " receives " + hero.getDamage() + " points of damage!");
+
                     if (monster.getHealthPoints() > 0) {
                         hero.receiveDamage(monster.getDamage());
-                        System.out.println(monster.getName() + " attacks!");
-                        System.out.println(hero.getName() + " receives " + monster.getDamage() + " points of damage!");
-                        System.out.println(".............................................\n.......................................\n............................................");
+                        System.out.println("////// " + monster.getName() + " attacks!");
+                        System.out.println("///////// " + hero.getName() + " receives " + monster.getDamage() + " points of damage!");
+                        System.out.println(".............................................\n");
                     } else {
-                        System.out.println(monster.getName() + " has been defeated!");
-                        System.out.println(hero.getName() + " has gained " + monster.getExpGiven() + " exp points!");
+                        System.out.println("////// " + monster.getName() + " has been defeated!");
+                        System.out.println("///////// " + hero.getName() + " has gained " + monster.getExpGiven() + " exp points!");
                         hero.receiveExp(monster.getExpGiven());
-                        System.out.println(".............................................\n.......................................\n............................................");
+                        System.out.println(".............................................\n");
                         hero.defeatEnemy();
                     }
                 } else if (decision == 2) {
-                    System.out.println(hero.getName() + " has run away from " + monster.getName() + "!");
-                    System.out.println(".............................................\n.......................................\n............................................");
+                    System.out.println("////// " + hero.getName() + " has run away from " + monster.getName() + "!");
+                    System.out.println(".............................................\n");
                     break;
                 }
             }
             if (hero.getHealthPoints() < 1) {
-                System.out.println(hero.getName() + " has been defeated!!");
-                System.out.println("Number of enemies defeated: " + (hero.getEnemiesDefeated()));
+                System.out.println("////// " + hero.getName() + " has been defeated!!");
+                System.out.println("///////// Number of enemies defeated: " + (hero.getEnemiesDefeated()));
                 break;
             }
         } while (hero.getHealthPoints() > 0 && monster.getHealthPoints() > 0); 

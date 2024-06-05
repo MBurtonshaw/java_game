@@ -69,7 +69,6 @@ public class Hero {
         this.resetExp();
         this.expPoints = leftovers;
         System.out.println(".............................................\n");
-        System.out.println(".............................................\n");
         System.out.println(this.toString());
     }
 
