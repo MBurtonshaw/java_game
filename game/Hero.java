@@ -98,7 +98,14 @@ public class Hero {
     }
 
     public String toString() {
-        return getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage() + " and their experience points are currently: " + getExpPoints() + ". They have the " + getSpellsList() + " spells.";
+        String returner = "";
+
+        if (this.getSpellsList().size() > 0) {
+            returner = getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage() + ", and their experience points are currently: " + getExpPoints() + ". They have the " + getSpellsList() + " spell(s).";
+        } else {
+            returner = getName() + " is lvl " + getLvl() + ". Their health points are: " + getHealthPoints() + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage() + ", and their experience points are currently: " + getExpPoints() + ".";
+        }
+        return returner;
     }
 
     public int receiveDamage(int damageTaken) {

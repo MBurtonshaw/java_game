@@ -5,14 +5,19 @@ import java.util.ArrayList;
 class Index {
     public static void main(String[] args) {
 
+        System.out.println("/////////////////////////////////////////////////////////");
+        System.out.println("/*******************************************************/");
+        System.out.println("/**************	 WELCOME HERO,  ************************/");
+        System.out.println("/*************	 TO ... GAME ...  **********************/");
+        System.out.println("/*******************************************************/");
+        System.out.println("/////////////////////////////////////////////////////////");
+
         Scanner userInput = new Scanner(System.in);
         System.out.println("uhhhh, could you remind me of your name?");
         String name = userInput.nextLine();
         List<String> someList = new ArrayList<>();
 
         Hero hero1 = new Hero(name, 1, 50, 20, 0, someList, 10, 0);
-
-        System.out.println(".............................................\n");
         System.out.println(hero1.toString());
         
         System.out.println(".............................................\n");        Monster monster1 = new Monster("Barry", 20, 5, 50);
@@ -44,6 +49,10 @@ class Index {
         System.out.println(monster5.appear());
         getAction(hero1, monster5);
         System.out.println(".............................................\n.......................................\n............................................");
+        if (hero1.getHealthPoints() > 0 && monster5.getHealthPoints() <= 0) {
+            System.out.println(hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated() + 1) + " enemies!!!");
+            System.out.println("The kingdom is again at peace...");
+        }
     }
 
     static int getAction(Hero hero, Monster monster) {
@@ -150,12 +159,11 @@ class Index {
             }
             if (hero.getHealthPoints() < 1) {
                 System.out.println(hero.getName() + " has been defeated!!");
-                System.out.println("Number of enemies defeated: " + (hero.getEnemiesDefeated() + 1));
+                System.out.println("Number of enemies defeated: " + (hero.getEnemiesDefeated()));
                 break;
             }
         } while (hero.getHealthPoints() > 0 && monster.getHealthPoints() > 0); 
-        System.out.println(hero.getName() + " has defeated all enemies!!!");
-        System.out.println("The kingdom is again at peace...");
+        
         return 0;
     }
 
