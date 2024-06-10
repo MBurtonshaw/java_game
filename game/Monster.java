@@ -5,11 +5,18 @@ public class Monster {
     private int damage;
     private int expGiven;
 
-    public Monster(String name, int healthPoints, int damage, int expGiven) {
+    private String color;
+
+    public Monster(String name, int healthPoints, int damage, int expGiven, String color) {
         this.name = name;
         this.healthPoints = healthPoints;
         this.damage = damage;
         this.expGiven = expGiven;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public int getDamage() {
@@ -32,7 +39,9 @@ public class Monster {
         return "Your opponent, " + getName() + ", has appeared!";
     }
 
-    public int receiveDamage(int damageTaken) {
+    public int receiveDamage(int damageTaken) throws InterruptedException {
+        Utility.playSound("sword_clash.wav");
+        Thread.sleep(700);
         return this.healthPoints -= damageTaken;
     }
 
@@ -40,15 +49,8 @@ public class Monster {
         this.damage = damage / 2;
     }
 
-    public void takeFireDamage() {
+    public void takeFireDamage() throws InterruptedException {
         this.healthPoints = 0;
-    }
-
-    public int checkIfDead() {
-        if (this.healthPoints <= 0) {
-            return 1;
-        }
-        return 0;
     }
 
 }
