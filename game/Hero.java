@@ -11,6 +11,7 @@ public class Hero {
     private int magicPoints;
     private int expPoints = 0;
     private List<String> spellsList = new ArrayList<>();
+    private List<String> itemList = new ArrayList<>();
     private int damage = 10;
     private int enemiesDefeated;
 
@@ -86,6 +87,10 @@ public class Hero {
         return spellsList;
     }
 
+    public List<String> getItemList() {
+        return itemList;
+    }
+
     public void castFreezeSpell() throws InterruptedException {
         if (this.magicPoints > 9) {
             System.out.println(CYAN + this.getName() + " has cast freeze spell!");
@@ -122,12 +127,12 @@ public class Hero {
         if (this.getSpellsList().size() > 0) {
             returner = GREEN + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
                     + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage()
-                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n" + " They have the "
+                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n" + "Current items: " + getItemList() + "\n" + " They have the "
                     + getSpellsList() + " spell(s).";
         } else {
             returner = GREEN + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
-                    + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage()
-                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n";
+                    + ", their magic points are: " + getMagicPoints() + ", and their damage is: " + getDamage()
+                    + ".\n Their experience points are currently: " + getExpPoints() + ".\n";
         }
         return returner;
     }
@@ -142,6 +147,10 @@ public class Hero {
             int leftovers = expPoints - 100;
             this.levelUp(leftovers);
         }
+    }
+
+    public void receiveItem(String item) {
+        itemList.add(item);
     }
 
     public int resetExp() {

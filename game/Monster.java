@@ -7,12 +7,15 @@ public class Monster {
 
     private String color;
 
-    public Monster(String name, int healthPoints, int damage, int expGiven, String color) {
+    private String itemDropped;
+
+    public Monster(String name, int healthPoints, int damage, int expGiven, String color, String itemDropped) {
         this.name = name;
         this.healthPoints = healthPoints;
         this.damage = damage;
         this.expGiven = expGiven;
         this.color = color;
+        this.itemDropped = itemDropped;
     }
 
     public String getColor() {
@@ -25,6 +28,17 @@ public class Monster {
 
     public int getExpGiven() {
         return expGiven;
+    }
+
+    public String getItem() {
+        return itemDropped;
+    }
+
+    public boolean hasItem() {
+        if (itemDropped != "") {
+            return true;
+        }
+        return false;
     }
 
     public int getHealthPoints() {
