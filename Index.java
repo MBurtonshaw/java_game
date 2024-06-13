@@ -48,6 +48,7 @@ class Index {
         Hero hero1 = new Hero(name, 1, 50, 20, 0, someList, 10, 0);
         System.out.println(GREEN + hero1.toString());
 
+        //
 
 
         /* ////////// */
@@ -103,9 +104,11 @@ class Index {
             /* ////////// */
             Thread.sleep(1000);
             if (hero1.getHealthPoints() > 0 && monster5.getHealthPoints() <= 0) {
+                Utility.playSound("win_music.wav");
                 System.out.println(
                         BLUE + hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated()) + " enemies!!!");
                 System.out.println(BLUE + "The kingdom is again at peace...");
+                Thread.sleep(5000);
             }
         }
     }
@@ -128,9 +131,17 @@ class Index {
         Scanner userInput = new Scanner(System.in);
 
         do {
+            String message = "";
             // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             if (hero.getLvl() > 2) {
-                System.out.println(GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP)");
+                if (hero.getItemMap().size() > 0) {
+                    message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion || 6 - Drink magicPotion";
+                    System.out.println(message);
+                } else {
+                    message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP)";
+                    System.out.println(message);
+
+                }
                 int decision = userInput.nextInt();
                 //////////////
                 if (decision == 1) {
@@ -150,7 +161,7 @@ class Index {
                         System.out.println(GREEN + "///////// " + hero.getName() + " has gained " + monster.getExpGiven()
                                 + " exp points!");
                         if (monster.hasItem()) {
-                            hero.receiveItem(monster.getItem());
+                            hero.receiveItem(monster.getItem(), 1);
                             System.out.println(monster.getColor() + monster.getName() + " dropped a " + monster.getItem() + "!");
                             System.out.println(GREEN + hero.getName() + " picked up the " + monster.getItem() + " and put it in their bag!");
                         }
@@ -172,7 +183,7 @@ class Index {
                         monster.takeFireDamage();
                         System.out.println(GREEN + "////// " + monster.getName() + " has been defeated!");
                         if (monster.hasItem()) {
-                            hero.receiveItem(monster.getItem());
+                            hero.receiveItem(monster.getItem(), 1);
                             System.out.println(monster.getColor() + monster.getName() + " dropped a " + monster.getItem() + "!");
                             System.out.println(GREEN + hero.getName() + " picked up the " + monster.getItem() + " and put it in their bag!");
                         }
@@ -181,14 +192,35 @@ class Index {
                     } else {
                         System.out.println(RED + "/// Not enough magic points!");
                     }
+                } else if (decision == 5) {
+                    hero.drinkHealthPotion();
+                    hero.receiveDamage(monster.getDamage());
+                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                            + " points of damage!");
+                    System.out.println(".............................................\n");
+                } else if (decision == 6) {
+                    hero.drinkMagicPotion();
+                    hero.receiveDamage(monster.getDamage());
+                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                            + " points of damage!");
+                    System.out.println(".............................................\n");
                 } else {
+
                     System.out.println(RED + "/// Please enter a valid option");
                 }
 
                 // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             } else if (hero.getLvl() > 1) {
-                System.out.println(GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)");
-                System.out.println(".............................................\n");
+                if (hero.getItemMap().size() > 0) {
+                    message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion || 6 - Drink magicPotion";
+                    System.out.println(message);
+                } else {
+                    message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)";
+                    System.out.println(message);
+
+                }
                 int decision = userInput.nextInt();
                 //////////////
                 if (decision == 1) {
@@ -208,7 +240,7 @@ class Index {
                         System.out.println(BLUE + "///////// " + hero.getName() + " has gained " + monster.getExpGiven()
                                 + " exp points!");
                         if (monster.hasItem()) {
-                            hero.receiveItem(monster.getItem());
+                            hero.receiveItem(monster.getItem(), 1);
                             System.out.println(monster.getColor() + monster.getName() + " dropped a " + monster.getItem() + "!");
                             System.out.println(GREEN + hero.getName() + " picked up the " + monster.getItem() + " and put it in their bag!");
                         }
@@ -228,13 +260,34 @@ class Index {
                     } else {
                         System.out.println(RED + "/// Not enough magic points!");
                     }
+                } else if (decision == 5) {
+                    hero.drinkHealthPotion();
+                    hero.receiveDamage(monster.getDamage());
+                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                            + " points of damage!");
+                    System.out.println(".............................................\n");
+                } else if (decision == 6) {
+                    hero.drinkMagicPotion();
+                    hero.receiveDamage(monster.getDamage());
+                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                            + " points of damage!");
+                    System.out.println(".............................................\n");
                 } else {
                     System.out.println(RED + "/// Please enter a valid option");
                 }
 
                 // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             } else {
-                System.out.println(GREEN + "1 - Attack  ||  2 - Run");
+                if (hero.getItemMap().size() > 0) {
+                    message = GREEN + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion || 6 - Drink magicPotion";
+                    System.out.println(message);
+                } else {
+                    message = GREEN + "1 - Attack  ||  2 - Run";
+                    System.out.println(message);
+
+                }
                 int decision = userInput.nextInt();
                 //////////////
                 if (decision == 1) {
@@ -255,7 +308,7 @@ class Index {
                         System.out.println(BLUE + "///////// " + hero.getName() + " has gained " + monster.getExpGiven()
                                 + " exp points!");
                         if (monster.hasItem()) {
-                            hero.receiveItem(monster.getItem());
+                            hero.receiveItem(monster.getItem(), 1);
                             System.out.println(monster.getColor() + monster.getName() + " dropped a " + monster.getItem() + "!");
                             System.out.println(GREEN + hero.getName() + " picked up the " + monster.getItem() + " and put it in their bag!");
                         }
@@ -267,6 +320,22 @@ class Index {
                     System.out.println(MAGENTA + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
                     System.out.println(".............................................\n");
                     break;
+                } else if (decision == 5) {
+                    hero.drinkHealthPotion();
+                    hero.receiveDamage(monster.getDamage());
+                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                            + " points of damage!");
+                    System.out.println(".............................................\n");
+                } else if (decision == 6) {
+                    hero.drinkMagicPotion();
+                    hero.receiveDamage(monster.getDamage());
+                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                            + " points of damage!");
+                    System.out.println(".............................................\n");
+                } else {
+                    System.out.println("Please enter a valid option");
                 }
             }
             if (hero.getHealthPoints() < 1) {

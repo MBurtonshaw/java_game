@@ -1,6 +1,8 @@
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Hero {
 
@@ -12,6 +14,8 @@ public class Hero {
     private int expPoints = 0;
     private List<String> spellsList = new ArrayList<>();
     private List<String> itemList = new ArrayList<>();
+
+    private Map<String, Integer> itemMap = new HashMap<>();
     private int damage = 10;
     private int enemiesDefeated;
 
@@ -91,6 +95,10 @@ public class Hero {
         return itemList;
     }
 
+    public Map<String, Integer> getItemMap() {
+        return itemMap;
+    }
+
     public void castFreezeSpell() throws InterruptedException {
         if (this.magicPoints > 9) {
             System.out.println(CYAN + this.getName() + " has cast freeze spell!");
@@ -121,18 +129,65 @@ public class Hero {
         }
     }
 
+    public void drinkMagicPotion() throws InterruptedException {
+
+        for (Map.Entry<String, Integer> item : itemMap.entrySet()) {
+            if (item.getKey().equals("magicPotion")) {
+                if (item.getValue() > 0) {
+                    Utility.playSound("uncork.wav");
+                    Utility.playSound("drink.wav");
+                    Thread.sleep(1000);
+                    System.out.println(getName() + " has used a magic potion!");
+                    Thread.sleep(1000);
+                    System.out.println(getName() + " has gained 10 MP!");
+                    this.magicPoints += 10;
+                    System.out.println("Current MP: " + getMagicPoints());
+                    removeItem("magicPotion");
+                } else {
+                    System.out.println("No magic potions!");
+                }
+            }
+        }
+
+    }
+
+    public void drinkHealthPotion() throws InterruptedException {
+
+        for (Map.Entry<String, Integer> item : itemMap.entrySet()) {
+            if (item.getKey().equals("healthPotion")) {
+                if (item.getValue() > 0) {
+                    Utility.playSound("uncork.wav");
+                    Utility.playSound("drink.wav");
+                    Thread.sleep(1000);
+                    System.out.println(getName() + " has used a health potion!");
+                    Thread.sleep(1000);
+                    System.out.println(getName() + " has gained 30 HP!");
+                    this.healthPoints += 30;
+                    System.out.println("Current HP: " + getHealthPoints());
+                    removeItem("healthPotion");
+                } else {
+                    System.out.println("No health potions!");
+                }
+            }
+        }
+
+    }
+
     public String toString() {
         String returner = "";
 
         if (this.getSpellsList().size() > 0) {
             returner = GREEN + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
                     + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage()
-                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n" + "Current items: " + getItemList() + "\n" + " They have the "
-                    + getSpellsList() + " spell(s).";
+                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n" + "\n" + " They have the "
+                    + getSpellsList() + " spell(s).\n";
         } else {
             returner = GREEN + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
                     + ", their magic points are: " + getMagicPoints() + ", and their damage is: " + getDamage()
                     + ".\n Their experience points are currently: " + getExpPoints() + ".\n";
+        }
+        if (this.getItemMap().size() > 0) {
+            returner += " Current items: " + getItemMap() + "\n";
         }
         return returner;
     }
@@ -149,8 +204,12 @@ public class Hero {
         }
     }
 
-    public void receiveItem(String item) {
-        itemList.add(item);
+    public void receiveItem(String item, int quantity) {
+        itemMap.put(item, quantity);
+    }
+
+    public void removeItem(String item) {
+        itemMap.remove(item);
     }
 
     public int resetExp() {
