@@ -100,7 +100,6 @@ public class Hero {
     }
 
     public void castFreezeSpell() throws InterruptedException {
-        if (this.magicPoints > 9) {
             System.out.println(CYAN + this.getName() + " has cast freeze spell!");
             Utility.playSound("eerie_wind.wav");
             Thread.sleep(1000);
@@ -109,13 +108,9 @@ public class Hero {
             Thread.sleep(1000);
             System.out.println("...");
             Thread.sleep(1000);
-        } else {
-            System.out.println(RED + "Not enough magic points!");
-        }
     }
 
     public void castFireSpell() throws InterruptedException {
-        if (this.magicPoints > 14) {
             System.out.println(YELLOW + this.getName() + " has cast fire spell!");
             Utility.playSound("crackling_fire.wav");
             Thread.sleep(1200);
@@ -124,9 +119,6 @@ public class Hero {
             Thread.sleep(1200);
             System.out.println("...");
             Thread.sleep(1000);
-        } else {
-            System.out.println(RED + "Not enough magic points!");
-        }
     }
 
     public void drinkMagicPotion() throws InterruptedException {
@@ -142,13 +134,14 @@ public class Hero {
                     System.out.println(getName() + " has gained 10 MP!");
                     this.magicPoints += 10;
                     System.out.println("Current MP: " + getMagicPoints());
-                    removeItem("magicPotion");
                 } else {
                     System.out.println("No magic potions!");
                 }
             }
         }
-
+        if (itemMap.containsKey("magicPotion")) {
+            itemMap.remove("magicPotion", 1);
+        }
     }
 
     public void drinkHealthPotion() throws InterruptedException {
@@ -164,13 +157,14 @@ public class Hero {
                     System.out.println(getName() + " has gained 30 HP!");
                     this.healthPoints += 30;
                     System.out.println("Current HP: " + getHealthPoints());
-                    removeItem("healthPotion");
                 } else {
                     System.out.println("No health potions!");
                 }
             }
         }
-
+        if (itemMap.containsKey("healthPotion")) {
+            itemMap.remove("healthPotion", 1);
+        }
     }
 
     public String toString() {
@@ -206,10 +200,6 @@ public class Hero {
 
     public void receiveItem(String item, int quantity) {
         itemMap.put(item, quantity);
-    }
-
-    public void removeItem(String item) {
-        itemMap.remove(item);
     }
 
     public int resetExp() {
