@@ -169,16 +169,19 @@ class Index {
             }
             hero.defeatEnemy();
             hero.receiveExp(monster.getExpGiven());
+        } else {
+            System.out.println(RED + "/// Not enough magic points!" + GREEN);
         }
     }
 
     public static void castFreezeSpell(Hero hero, Monster monster) throws InterruptedException {
         String RED = "\u001B[31m";
+        String GREEN = "\u001B[32m";
         if (hero.getMagicPoints() > 9) {
             hero.castFreezeSpell();
             monster.takeFreezeDamage();
         } else {
-            System.out.println(RED + "/// Not enough magic points!");
+            System.out.println(RED + "/// Not enough magic points!" + GREEN);
         }
     }
 
