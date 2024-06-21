@@ -6,17 +6,6 @@ import java.util.ArrayList;
 
 class Index {
     public static void main(String[] args) throws InterruptedException {
-
-        String BLACK = "\u001B[30m";
-        String RED = "\u001B[31m";
-        String GREEN = "\u001B[32m";
-        String YELLOW = "\u001B[33m";
-        String BLUE = "\u001B[34m";
-        String MAGENTA = "\u001B[35m";
-        String CYAN = "\u001B[36m";
-        String WHITE = "\u001B[37m";
-
-
         /* ////////// */
         /* Initializing scanner, getting user input for name, initializing Hero */
         /* ////////// */
@@ -35,32 +24,30 @@ class Index {
 
         Thread.sleep(750);
         Utility.playSound("fanfare.wav");
-        System.out.println(BLUE + "///////////////////////////////////////////////////////////////////////////////////////");
-        System.out.println(CYAN + "/*************************************************************************************/");
-        System.out.println(BLUE + "/******************************  "	 + BLACK + "WELCOME HERO," + BLUE + "    ************************************/");
-        System.out.println(BLUE + "/****************************  " + BLACK + "TO ... THE GAME ... " + BLUE + "   ********************************/");
-        System.out.println(CYAN + "/*************************************************************************************/");
-        System.out.println(BLUE + "///////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println(Utility.getBLUE() + "///////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println(Utility.getCYAN() + "/*************************************************************************************/");
+        System.out.println(Utility.getBLUE() + "/******************************  "	 + Utility.getBLACK() + "WELCOME HERO," + Utility.getBLUE() + "    ************************************/");
+        System.out.println(Utility.getBLUE() + "/****************************  " + Utility.getBLACK() + "TO ... THE GAME ... " + Utility.getBLUE() + "   ********************************/");
+        System.out.println(Utility.getCYAN() + "/*************************************************************************************/");
+        System.out.println(Utility.getBLUE() + "///////////////////////////////////////////////////////////////////////////////////////");
 
 
         List<String> someList = new ArrayList<>();
         Hero hero1 = new Hero(name, 1, 50, 20, 0, someList, 10, 0);
-        System.out.println(GREEN + hero1.toString());
+        System.out.println(Utility.getGREEN() + hero1.toString());
 
         //
 
-        Monster monster1 = new Monster("Barry", 20, 5, 50, CYAN, "");
-        Monster monster2 = new Monster("Larry", 30, 10, 50, BLACK, "healthPotion");
-        Monster monster3 = new Monster("Terry", 45, 12, 50, MAGENTA, "magicPotion");
-        Monster monster4 = new Monster("Gary", 55, 16, 50, YELLOW, "");
-        Monster monster5 = new Monster("Mary", 65, 22, 100, BLUE, "healthPotion");
-        Monster monster6 = new Monster("Gorlock", 70, 26,  50, MAGENTA, "magicPotion");
-        Monster monster7 = new Monster("Shmirgul", 90, 30, 50, CYAN, "healthPotion");
-        Monster monster8 = new Monster("Tim", 110, 37, 100, YELLOW, "");
-        Monster monster9 = new Monster("Hydrolscus", 120, 42, 100, BLUE, "");
-        Monster monster10 = new Monster("Gygron", 135, 50, 0, BLACK, "");
-
-
+        Monster monster1 = new Monster("Barry", 20, 5, 50, Utility.getCYAN(), "");
+        Monster monster2 = new Monster("Larry", 30, 10, 50, Utility.getBLACK(), "healthPotion");
+        Monster monster3 = new Monster("Terry", 45, 12, 50, Utility.getMAGENTA(), "magicPotion");
+        Monster monster4 = new Monster("Gary", 55, 16, 50, Utility.getYELLOW(), "");
+        Monster monster5 = new Monster("Mary", 65, 22, 100, Utility.getBLUE(), "healthPotion");
+        Monster monster6 = new Monster("Gorlock", 70, 26,  50, Utility.getMAGENTA(), "magicPotion");
+        Monster monster7 = new Monster("Shmirgul", 90, 30, 50, Utility.getCYAN(), "healthPotion");
+        Monster monster8 = new Monster("Tim", 110, 37, 100, Utility.getYELLOW(), "");
+        Monster monster9 = new Monster("Hydrolscus", 120, 42, 100, Utility.getBLUE(), "");
+        Monster monster10 = new Monster("Gygron", 135, 50, 0, Utility.getBLACK(), "");
         //
 
         /* First battle */
@@ -108,8 +95,8 @@ class Index {
             if (hero1.getHealthPoints() > 0 && monster10.getHealthPoints() <= 0) {
                 Utility.playSound("win_music.wav");
                 System.out.println(
-                        BLUE + hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated()) + " enemies!!!");
-                System.out.println(BLUE + "The kingdom is again at peace...");
+                        Utility.getBLUE() + hero1.getName() + " has defeated all " + (hero1.getEnemiesDefeated()) + " enemies!!!");
+                System.out.println(Utility.getBLUE() + "The kingdom is again at peace...");
                 Thread.sleep(5000);
             }
         }
@@ -209,16 +196,6 @@ class Index {
 
     static int handleInteraction(Hero hero, Monster monster) throws InterruptedException {
 
-        String BLACK = "\u001B[30m";
-        String RED = "\u001B[31m";
-        String GREEN = "\u001B[32m";
-        String YELLOW = "\u001B[33m";
-        String BLUE = "\u001B[34m";
-        String MAGENTA = "\u001B[35m";
-        String CYAN = "\u001B[36m";
-        String WHITE = "\u001B[37m";
-
-
         Scanner userInput = new Scanner(System.in);
 
         do {
@@ -227,14 +204,14 @@ class Index {
             if (hero.getLvl() > 2) {
                 if (hero.getInventory().size() > 0) {
                     if (hero.getInventory().containsKey("magicPotion") && hero.getInventory().containsKey("healthPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion || 6 - Drink magicPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion || 6 - Drink magicPotion";
                     } else if (hero.getInventory().containsKey("magicPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 6 - Drink magicPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 6 - Drink magicPotion";
                     } else if (hero.getInventory().containsKey("healthPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion";
                     }
                 } else {
-                    message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP)";
+                    message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP)";
                 }
                 System.out.println(message);
                 int decision = userInput.nextInt();
@@ -243,7 +220,7 @@ class Index {
                     attackMonster(hero, monster);
 
                 } else if (decision == 2) {
-                    System.out.println(MAGENTA + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
+                    System.out.println(Utility.getMAGENTA() + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
                     break;
                     //////////////
                 } else if (decision == 3) {
@@ -257,21 +234,21 @@ class Index {
                     drinkMagicPotion(hero, monster);
                 } else {
 
-                    System.out.println(RED + "/// Please enter a valid option");
+                    System.out.println(Utility.getRED() + "/// Please enter a valid option");
                 }
 
                 // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             } else if (hero.getLvl() > 1) {
                 if (hero.getInventory().size() > 0) {
                     if (hero.getInventory().containsKey("magicPotion") && hero.getInventory().containsKey("healthPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion || 6 - Drink magicPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion || 6 - Drink magicPotion";
                     } else if (hero.getInventory().containsKey("magicPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 6 - Drink magicPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 6 - Drink magicPotion";
                     } else if (hero.getInventory().containsKey("healthPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion";
                     }
                 } else {
-                    message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)";
+                    message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)";
                 }
                 System.out.println(message);
                 int decision = userInput.nextInt();
@@ -279,7 +256,7 @@ class Index {
                 if (decision == 1) {
                     attackMonster(hero, monster);
                 } else if (decision == 2) {
-                    System.out.println(MAGENTA + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
+                    System.out.println(Utility.getMAGENTA() + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
                     System.out.println(".............................................\n");
                     break;
                     //////////////
@@ -290,21 +267,21 @@ class Index {
                 } else if (decision == 6) {
                     drinkMagicPotion(hero, monster);
                 } else {
-                    System.out.println(RED + "/// Please enter a valid option");
+                    System.out.println(Utility.getRED() + "/// Please enter a valid option");
                 }
 
                 // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             } else {
                 if (hero.getInventory().size() > 0) {
                     if (hero.getInventory().containsKey("magicPotion") && hero.getInventory().containsKey("healthPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion || 6 - Drink magicPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion || 6 - Drink magicPotion";
                     } else if (hero.getInventory().containsKey("magicPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  || 6 - Drink magicPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  || 6 - Drink magicPotion";
                     } else if (hero.getInventory().containsKey("healthPotion")) {
-                        message = GREEN + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion";
+                        message = Utility.getGREEN() + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion";
                     }
                 } else {
-                    message = GREEN + "1 - Attack  ||  2 - Run";
+                    message = Utility.getGREEN() + "1 - Attack  ||  2 - Run";
                 }
                 System.out.println(message);
                 int decision = userInput.nextInt();
@@ -312,7 +289,7 @@ class Index {
                 if (decision == 1) {
                    attackMonster(hero, monster);
                 } else if (decision == 2) {
-                    System.out.println(MAGENTA + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
+                    System.out.println(Utility.getMAGENTA() + "////// " + hero.getName() + " has run away from " + monster.getName() + "!");
                     System.out.println(".............................................\n");
                     break;
                 } else if (decision == 5) {
@@ -325,9 +302,9 @@ class Index {
             }
             if (hero.getHealthPoints() < 1) {
                 Thread.sleep(1000);
-                System.out.println(RED + "////// " + hero.getName() + " has been defeated!!");
+                System.out.println(Utility.getRED() + "////// " + hero.getName() + " has been defeated!!");
                 Thread.sleep(1000);
-                System.out.println(BLUE + "///////// Number of enemies defeated: " + (hero.getEnemiesDefeated()));
+                System.out.println(Utility.getBLUE() + "///////// Number of enemies defeated: " + (hero.getEnemiesDefeated()));
             }
         } while (hero.getHealthPoints() > 0 && monster.getHealthPoints() > 0);
 
