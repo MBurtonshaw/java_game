@@ -13,9 +13,8 @@ public class Hero {
     private int magicPoints;
     private int expPoints = 0;
     private List<String> spellsList = new ArrayList<>();
-    private List<String> itemList = new ArrayList<>();
 
-    private Map<String, Integer> itemMap = new HashMap<>();
+    private Map<String, Integer> inventory = new HashMap<>();
     private int damage = 10;
     private int enemiesDefeated;
 
@@ -91,15 +90,12 @@ public class Hero {
         return spellsList;
     }
 
-    public List<String> getItemList() {
-        return itemList;
-    }
-
-    public Map<String, Integer> getItemMap() {
-        return itemMap;
+    public Map<String, Integer> getInventory() {
+        return inventory;
     }
 
     public void castFreezeSpell() throws InterruptedException {
+        if (getMagicPoints() >= 10) {
             System.out.println(CYAN + this.getName() + " has cast freeze spell!");
             Utility.playSound("eerie_wind.wav");
             Thread.sleep(1000);
@@ -108,9 +104,14 @@ public class Hero {
             Thread.sleep(1000);
             System.out.println("...");
             Thread.sleep(1000);
+        } else {
+            System.out.println(RED + "///" + "Not enough magic points!" + GREEN);
+        }
+
     }
 
     public void castFireSpell() throws InterruptedException {
+        if (getMagicPoints() >= 15) {
             System.out.println(YELLOW + this.getName() + " has cast fire spell!");
             Utility.playSound("crackling_fire.wav");
             Thread.sleep(1200);
@@ -119,11 +120,14 @@ public class Hero {
             Thread.sleep(1200);
             System.out.println("...");
             Thread.sleep(1000);
+        } else {
+            System.out.println(RED + "///" + "Not enough magic points!" + GREEN);
+        }
     }
 
     public void drinkMagicPotion() throws InterruptedException {
 
-        for (Map.Entry<String, Integer> item : itemMap.entrySet()) {
+        for (Map.Entry<String, Integer> item : inventory.entrySet()) {
             if (item.getKey().equals("magicPotion")) {
                 if (item.getValue() > 0) {
                     Utility.playSound("uncork.wav");
@@ -139,14 +143,14 @@ public class Hero {
                 }
             }
         }
-        if (itemMap.containsKey("magicPotion")) {
-            itemMap.remove("magicPotion", 1);
+        if (inventory.containsKey("magicPotion")) {
+            inventory.remove("magicPotion", 1);
         }
     }
 
     public void drinkHealthPotion() throws InterruptedException {
 
-        for (Map.Entry<String, Integer> item : itemMap.entrySet()) {
+        for (Map.Entry<String, Integer> item : inventory.entrySet()) {
             if (item.getKey().equals("healthPotion")) {
                 if (item.getValue() > 0) {
                     Utility.playSound("uncork.wav");
@@ -162,8 +166,8 @@ public class Hero {
                 }
             }
         }
-        if (itemMap.containsKey("healthPotion")) {
-            itemMap.remove("healthPotion", 1);
+        if (inventory.containsKey("healthPotion")) {
+            inventory.remove("healthPotion", 1);
         }
     }
 
@@ -180,8 +184,8 @@ public class Hero {
                     + ", their magic points are: " + getMagicPoints() + ", and their damage is: " + getDamage()
                     + ".\n Their experience points are currently: " + getExpPoints() + ".\n";
         }
-        if (this.getItemMap().size() > 0) {
-            returner += " Current items: " + getItemMap() + "\n";
+        if (this.getInventory().size() > 0) {
+            returner += " Current items: " + getInventory() + "\n";
         }
         return returner;
     }
@@ -199,7 +203,7 @@ public class Hero {
     }
 
     public void receiveItem(String item, int quantity) {
-        itemMap.put(item, quantity);
+        inventory.put(item, quantity);
     }
 
     public int resetExp() {

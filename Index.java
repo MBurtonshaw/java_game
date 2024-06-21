@@ -52,54 +52,54 @@ class Index {
         Monster monster1 = new Monster("Barry", 20, 5, 50, CYAN, "");
         Monster monster2 = new Monster("Larry", 30, 10, 50, BLACK, "healthPotion");
         Monster monster3 = new Monster("Terry", 45, 12, 50, MAGENTA, "magicPotion");
-        Monster monster4 = new Monster("Gary", 60, 16, 50, YELLOW, "");
-        Monster monster5 = new Monster("Mary", 75, 22, 100, BLUE, "healthPotion");
-        Monster monster6 = new Monster("Gorlock", 85, 28,  50, MAGENTA, "magicPotion");
-        Monster monster7 = new Monster("Shmirgul", 100, 33, 50, CYAN, "healthPotion");
-        Monster monster8 = new Monster("Tim", 110, 37, 50, YELLOW, "");
-        Monster monster9 = new Monster("Hydrolscus", 120, 41, 50, BLUE, "");
+        Monster monster4 = new Monster("Gary", 55, 16, 50, YELLOW, "");
+        Monster monster5 = new Monster("Mary", 65, 22, 100, BLUE, "healthPotion");
+        Monster monster6 = new Monster("Gorlock", 70, 26,  50, MAGENTA, "magicPotion");
+        Monster monster7 = new Monster("Shmirgul", 90, 30, 50, CYAN, "healthPotion");
+        Monster monster8 = new Monster("Tim", 110, 37, 100, YELLOW, "");
+        Monster monster9 = new Monster("Hydrolscus", 120, 42, 100, BLUE, "");
         Monster monster10 = new Monster("Gygron", 135, 50, 0, BLACK, "");
 
 
         //
 
         /* First battle */
-        handleMonster(hero1, monster1);
+        battle(hero1, monster1);
 
         /* Second battle */
-        handleMonster(hero1, monster2);
+        battle(hero1, monster2);
 
         /* Third battle */
-        handleMonster(hero1, monster3);
+        battle(hero1, monster3);
 
         /* Fourth battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster4);
+            battle(hero1, monster4);
         }
 
         /* Fifth battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster5);
+            battle(hero1, monster5);
         }
         /* Sixth battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster6);
+            battle(hero1, monster6);
         }
         /* Seventh battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster7);
+            battle(hero1, monster7);
         }
         /* Eighth battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster8);
+            battle(hero1, monster8);
         }
         /* Ninth battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster9);
+            battle(hero1, monster9);
         }
         /* Tenth battle */
         if (hero1.getHealthPoints() > 0) {
-            handleMonster(hero1, monster10);
+            battle(hero1, monster10);
 
             /* ////////// */
             /* Win condition */
@@ -116,10 +116,10 @@ class Index {
 
     }
 
-    public static boolean handleMonster(Hero hero, Monster monster) throws InterruptedException {
+    public static boolean battle(Hero hero, Monster monster) throws InterruptedException {
         Thread.sleep(1500);
         System.out.println(monster.getColor() + "/// " + monster.appear());
-        getAction(hero, monster);
+        handleInteraction(hero, monster);
         System.out.println(".............................................\n");
         return true;
     }
@@ -169,17 +169,42 @@ class Index {
             }
             hero.defeatEnemy();
             hero.receiveExp(monster.getExpGiven());
+        }
+    }
+
+    public static void castFreezeSpell(Hero hero, Monster monster) throws InterruptedException {
+        String RED = "\u001B[31m";
+        if (hero.getMagicPoints() > 9) {
+            hero.castFreezeSpell();
+            monster.takeFreezeDamage();
         } else {
             System.out.println(RED + "/// Not enough magic points!");
         }
     }
 
+    public static void drinkHealthPotion(Hero hero, Monster monster) throws InterruptedException {
+        hero.drinkHealthPotion();
+        hero.receiveDamage(monster.getDamage());
+        System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+        System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                + " points of damage!");
+        System.out.println(".............................................\n");
+    }
+
+    public static void drinkMagicPotion(Hero hero, Monster monster) throws InterruptedException {
+        hero.drinkMagicPotion();
+        hero.receiveDamage(monster.getDamage());
+        System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
+        System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
+                + " points of damage!");
+        System.out.println(".............................................\n");
+    }
 
     /* ////////// */
     /* Battle Method */
     /* ////////// */
 
-    static int getAction(Hero hero, Monster monster) throws InterruptedException {
+    static int handleInteraction(Hero hero, Monster monster) throws InterruptedException {
 
         String BLACK = "\u001B[30m";
         String RED = "\u001B[31m";
@@ -197,12 +222,12 @@ class Index {
             String message = "";
             // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             if (hero.getLvl() > 2) {
-                if (hero.getItemMap().size() > 0) {
-                    if (hero.getItemMap().containsKey("magicPotion") && hero.getItemMap().containsKey("healthPotion")) {
+                if (hero.getInventory().size() > 0) {
+                    if (hero.getInventory().containsKey("magicPotion") && hero.getInventory().containsKey("healthPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion || 6 - Drink magicPotion";
-                    } else if (hero.getItemMap().containsKey("magicPotion")) {
+                    } else if (hero.getInventory().containsKey("magicPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 6 - Drink magicPotion";
-                    } else if (hero.getItemMap().containsKey("healthPotion")) {
+                    } else if (hero.getInventory().containsKey("healthPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  ||  4 - Fire Spell (15MP) || 5 - Drink healthPotion";
                     }
                 } else {
@@ -219,29 +244,14 @@ class Index {
                     break;
                     //////////////
                 } else if (decision == 3) {
-                    if (hero.getMagicPoints() > 9) {
-                        hero.castFreezeSpell();
-                        monster.takeFreezeDamage();
-                    } else {
-                        System.out.println(RED + "/// Not enough magic points!");
-                    }
+                    castFreezeSpell(hero, monster);
                     //////////////
                 } else if (decision == 4) {
                         castFireSpell(hero, monster);
                 } else if (decision == 5) {
-                    hero.drinkHealthPotion();
-                    hero.receiveDamage(monster.getDamage());
-                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
-                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
-                            + " points of damage!");
-                    System.out.println(".............................................\n");
+                    drinkHealthPotion(hero, monster);
                 } else if (decision == 6) {
-                    hero.drinkMagicPotion();
-                    hero.receiveDamage(monster.getDamage());
-                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
-                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
-                            + " points of damage!");
-                    System.out.println(".............................................\n");
+                    drinkMagicPotion(hero, monster);
                 } else {
 
                     System.out.println(RED + "/// Please enter a valid option");
@@ -249,12 +259,12 @@ class Index {
 
                 // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             } else if (hero.getLvl() > 1) {
-                if (hero.getItemMap().size() > 0) {
-                    if (hero.getItemMap().containsKey("magicPotion") && hero.getItemMap().containsKey("healthPotion")) {
+                if (hero.getInventory().size() > 0) {
+                    if (hero.getInventory().containsKey("magicPotion") && hero.getInventory().containsKey("healthPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion || 6 - Drink magicPotion";
-                    } else if (hero.getItemMap().containsKey("magicPotion")) {
+                    } else if (hero.getInventory().containsKey("magicPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 6 - Drink magicPotion";
-                    } else if (hero.getItemMap().containsKey("healthPotion")) {
+                    } else if (hero.getInventory().containsKey("healthPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  ||  3 - Freeze Spell (10MP)  || 5 - Drink healthPotion";
                     }
                 } else {
@@ -271,38 +281,23 @@ class Index {
                     break;
                     //////////////
                 } else if (decision == 3) {
-                    if (hero.getMagicPoints() > 9) {
-                        hero.castFreezeSpell();
-                        monster.takeFreezeDamage();
-                    } else {
-                        System.out.println(RED + "/// Not enough magic points!");
-                    }
+                    castFreezeSpell(hero, monster);
                 } else if (decision == 5) {
-                    hero.drinkHealthPotion();
-                    hero.receiveDamage(monster.getDamage());
-                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
-                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
-                            + " points of damage!");
-                    System.out.println(".............................................\n");
+                    drinkHealthPotion(hero, monster);
                 } else if (decision == 6) {
-                    hero.drinkMagicPotion();
-                    hero.receiveDamage(monster.getDamage());
-                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
-                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
-                            + " points of damage!");
-                    System.out.println(".............................................\n");
+                    drinkMagicPotion(hero, monster);
                 } else {
                     System.out.println(RED + "/// Please enter a valid option");
                 }
 
                 // CHECK FOR HERO LEVEL TO DETERMINE SPELLS AVAILABLE
             } else {
-                if (hero.getItemMap().size() > 0) {
-                    if (hero.getItemMap().containsKey("magicPotion") && hero.getItemMap().containsKey("healthPotion")) {
+                if (hero.getInventory().size() > 0) {
+                    if (hero.getInventory().containsKey("magicPotion") && hero.getInventory().containsKey("healthPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion || 6 - Drink magicPotion";
-                    } else if (hero.getItemMap().containsKey("magicPotion")) {
+                    } else if (hero.getInventory().containsKey("magicPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  || 6 - Drink magicPotion";
-                    } else if (hero.getItemMap().containsKey("healthPotion")) {
+                    } else if (hero.getInventory().containsKey("healthPotion")) {
                         message = GREEN + "1 - Attack  ||  2 - Run  || 5 - Drink healthPotion";
                     }
                 } else {
@@ -318,19 +313,9 @@ class Index {
                     System.out.println(".............................................\n");
                     break;
                 } else if (decision == 5) {
-                    hero.drinkHealthPotion();
-                    hero.receiveDamage(monster.getDamage());
-                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
-                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
-                            + " points of damage!");
-                    System.out.println(".............................................\n");
+                    drinkHealthPotion(hero, monster);
                 } else if (decision == 6) {
-                    hero.drinkMagicPotion();
-                    hero.receiveDamage(monster.getDamage());
-                    System.out.println(monster.getColor() + "////// " + monster.getName() + " attacks!");
-                    System.out.println(monster.getColor() + "///////// " + hero.getName() + " receives " + monster.getDamage()
-                            + " points of damage!");
-                    System.out.println(".............................................\n");
+                    drinkMagicPotion(hero, monster);
                 } else {
                     System.out.println("Please enter a valid option");
                 }
