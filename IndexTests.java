@@ -32,9 +32,18 @@ public class IndexTests {
         Monster m = new Monster("monster", 50, 50, 50, "", "healthPotion");
         h.levelUp(0);
         h.levelUp(0);
-        h.castFireSpell();
-        Assert.assertEquals(m.getHealthPoints(), 0);
-        Assert.assertEquals(h.getInventory().size(), 1);
-        Assert.assertEquals(h.getExpPoints(), 50);
+        Index.castFireSpell(h, m);
+        Assert.assertEquals("Fire spell should destroy enemy: ", m.getHealthPoints(), 0);
+        Assert.assertEquals("Hero gains experience points: ", h.getExpPoints(), 50);
+        Assert.assertEquals("Monster should drop a healthPotion: ", h.getInventory().size(), 1);
+    }
+
+    @Test
+    public void castFreezeSpell() throws InterruptedException {
+        Monster m = new Monster("monster", 50, 50, 50, "", "");
+        h.levelUp(0);
+        Index.castFreezeSpell(h, m);
+        Assert.assertEquals("Freeze spell should cut enemy damage in half: ", m.getDamage(), 25);
+        Assert.assertEquals("Enemy doesn't attack this round: ", h.getHealthPoints(), 125);
     }
 }

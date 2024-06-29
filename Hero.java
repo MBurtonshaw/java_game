@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class Hero {
 
-
     private String name;
     private int lvl;
     private int healthPoints;
@@ -18,17 +17,8 @@ public class Hero {
     private int damage = 10;
     private int enemiesDefeated;
 
-    String BLACK = "\u001B[30m";
-    String RED = "\u001B[31m";
-    String GREEN = "\u001B[32m";
-    String YELLOW = "\u001B[33m";
-    String BLUE = "\u001B[34m";
-    String MAGENTA = "\u001B[35m";
-    String CYAN = "\u001B[36m";
-    String WHITE = "\u001B[37m";
-
     public Hero(String name, int lvl, int healthPoints, int magicPoints, int expPoints, List<String> spellsList,
-            int damage, int enemiesDefeated) {
+                int damage, int enemiesDefeated) {
         this.name = name;
         this.lvl = lvl;
         this.healthPoints = healthPoints;
@@ -96,32 +86,32 @@ public class Hero {
 
     public void castFreezeSpell() throws InterruptedException {
         if (getMagicPoints() >= 10) {
-            System.out.println(CYAN + this.getName() + " has cast freeze spell!");
+            System.out.println(Utility.getCYAN() + this.getName() + " has cast freeze spell!");
             Utility.playSound("eerie_wind.wav");
             Thread.sleep(1000);
             this.magicPoints -= 10;
-            System.out.println(CYAN + "Enemy is hit with frost! Damage is halved!");
+            System.out.println(Utility.getCYAN() + "Enemy is hit with frost! Damage is halved!");
             Thread.sleep(1000);
             System.out.println("...");
             Thread.sleep(1000);
         } else {
-            System.out.println(RED + "///" + "Not enough magic points!" + GREEN);
+            System.out.println(Utility.getRED() + "///" + "Not enough magic points!" + Utility.getGREEN());
         }
 
     }
 
     public void castFireSpell() throws InterruptedException {
         if (getMagicPoints() >= 15) {
-            System.out.println(YELLOW + this.getName() + " has cast fire spell!");
+            System.out.println(Utility.getYELLOW() + this.getName() + " has cast fire spell!");
             Utility.playSound("crackling_fire.wav");
             Thread.sleep(1200);
             this.magicPoints -= 15;
-            System.out.println(YELLOW + "Enemy has been burnt!");
+            System.out.println(Utility.getYELLOW() + "Enemy has been burnt!");
             Thread.sleep(1200);
             System.out.println("...");
             Thread.sleep(1000);
         } else {
-            System.out.println(RED + "///" + "Not enough magic points!" + GREEN);
+            System.out.println(Utility.getRED() + "///" + "Not enough magic points!" + Utility.getGREEN());
         }
     }
 
@@ -175,12 +165,13 @@ public class Hero {
         String returner = "";
 
         if (this.getSpellsList().size() > 0) {
-            returner = GREEN + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
+            returner = Utility.getGREEN() + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
                     + ", their magic points are: " + getMagicPoints() + ", their damage is: " + getDamage()
-                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n" + "\n" + " They have the "
+                    + ",\n and their experience points are currently: " + getExpPoints() + ".\n" + "\n"
+                    + " They have the "
                     + getSpellsList() + " spell(s).\n";
         } else {
-            returner = GREEN + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
+            returner = Utility.getGREEN() + getName() + " is lvl " + getLvl() + "!\n Their health points are: " + getHealthPoints()
                     + ", their magic points are: " + getMagicPoints() + ", and their damage is: " + getDamage()
                     + ".\n Their experience points are currently: " + getExpPoints() + ".\n";
         }

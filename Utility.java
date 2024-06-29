@@ -1,6 +1,10 @@
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Utility {
 
@@ -45,6 +49,19 @@ public class Utility {
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("Error playing sound: " + e.getMessage());
+        }
+    }
+
+    public static void logToFile(String description) {
+        final String LOG_FILE = "highScores.txt";
+        LocalDateTime localDate = LocalDateTime.now();
+        try (FileWriter fileWriter = new FileWriter(LOG_FILE, true);
+             PrintWriter writer = new PrintWriter(fileWriter, true)) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+            String formattedDate = localDate.format(formatter);
+            writer.println(formattedDate + " " + description);
+        } catch (IOException e) {
+            System.out.println("Fail to log data: " + e.getMessage());
         }
     }
 
