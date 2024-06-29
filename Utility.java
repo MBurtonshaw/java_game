@@ -53,7 +53,7 @@ public class Utility {
     }
 
     public static void logToFile(String description) {
-        final String LOG_FILE = "highScores.txt";
+        final String LOG_FILE = "highScores.csv";
         LocalDateTime localDate = LocalDateTime.now();
         try (FileWriter fileWriter = new FileWriter(LOG_FILE, true);
              PrintWriter writer = new PrintWriter(fileWriter, true)) {

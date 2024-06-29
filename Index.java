@@ -44,9 +44,6 @@ class Index {
 
         System.out.println(Utility.getGREEN() + hero.toString());
 
-
-
-
         //
 
         Monster monster1 = new Monster("Barry", 20, 5, 50, Utility.getCYAN(), "");
@@ -90,11 +87,12 @@ class Index {
                 System.out.println(".............................................\n");
                 if (hero.getHealthPoints() < 1) {
                     Thread.sleep(1000);
+                    Utility.playSound("sad_trombone.wav");
                     System.out.println(Utility.getRED() + "////// " + hero.getName() + " has been defeated!!");
                     Thread.sleep(1000);
                     System.out.println(
                             Utility.getBLUE() + "///////// Number of enemies defeated: " + (hero.getEnemiesDefeated()));
-                    Utility.logToFile(" --- " + hero.getName() + ": defeated " + hero.getEnemiesDefeated() + " enemies before falling...");
+                    Utility.logToFile(hero.getName() + "," + hero.getEnemiesDefeated());
                     Thread.sleep(2000);
                     displayHighScores();
                     break;
@@ -107,7 +105,7 @@ class Index {
                         Utility.getBLUE() + hero.getName() + " has defeated all " + (hero.getEnemiesDefeated())
                                 + " enemies!!!");
                 System.out.println(Utility.getBLUE() + "The kingdom is again at peace...");
-                Utility.logToFile(" --- " + hero.getName() + " has defeated " + hero.getEnemiesDefeated() + " enemies and saved the kingdom!");
+                Utility.logToFile(hero.getName() + "," + hero.getEnemiesDefeated());
                 Thread.sleep(5000);
                 displayHighScores();
                 break;
@@ -117,39 +115,45 @@ class Index {
         return false;
     }
 
-    public static void displayHighScores() throws InterruptedException, FileNotFoundException {
-        File file = new File("highScores.txt");
+    public static void displayHighScores() throws InterruptedException {
+        File file = new File("highScores.csv");
         List<String> highScores = new ArrayList<>();
+        String message = "No heroes have yet saved the kingdom...";
 
         if (file.exists() && file.isFile()) {
-            try(Scanner scanner = new Scanner(file)) {
-                String message = "";
+            try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {
                     String lineOfData = scanner.nextLine();
-                    if (lineOfData.contains("saved the kingdom")) {
-                        highScores.add(lineOfData);
-                        for ( int i = 0; i < highScores.size(); i++) {
-                            if (highScores.size() > 0) {
-                                message = "\n High Scores: " + "\n";
-                                message += highScores.get(i) + "\n";
-                            };
+                    String[] data = lineOfData.split(",");
+                    if (data.length >= 2) {
+                        try {
+                            int enemiesDefeated = Integer.parseInt(data[1].trim());
+                            if (enemiesDefeated > 9) {
+                                highScores.add(data[0] + ": defeated " + enemiesDefeated + " enemies");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error parsing number of enemies for line: " + lineOfData);
                         }
+                    } else {
+                        System.out.println("Incorrect format in line: " + lineOfData);
                     }
                 }
-                if (message != "") {
-                    System.out.println(message);
+                if (!highScores.isEmpty()) {
+                    System.out.println(Utility.getBLACK() + "\nHigh Scores: ");
+                    for (String score : highScores) {
+                        System.out.println(score);
+                        Thread.sleep(1000);
+                    }
                 } else {
-                    System.out.println("No past heroes have saved the kingdom yet");
+                    System.out.println(message);
+                    Thread.sleep(1500);
                 }
-            } catch (FileNotFoundException e){
-                System.out.println("Fail to load initial CSV file.");
-            }catch (NumberFormatException e){
-                System.out.println("There are some data type error in CSV file.");
-            }catch (IllegalStateException e){
-                System.out.println("There is un-excepted product type in the CSV file. ");
+            } catch (FileNotFoundException e) {
+                System.out.println("Failed to load initial CSV file: " + e.getMessage());
             }
+        } else {
+            System.out.println("File does not exist or is not a regular file: " + file.getPath());
         }
-
     }
 
     public static void attackMonster(Hero hero, Monster monster) throws InterruptedException {
