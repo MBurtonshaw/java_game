@@ -107,7 +107,7 @@ class Index {
                         Utility.getBLUE() + hero.getName() + " has defeated all " + (hero.getEnemiesDefeated())
                                 + " enemies!!!");
                 System.out.println(Utility.getBLUE() + "The kingdom is again at peace...");
-                Utility.logToFile(" --- " + hero.getName() + " has defeated all enemies and saved the kingdom!");
+                Utility.logToFile(" --- " + hero.getName() + " has defeated " + hero.getEnemiesDefeated() + " enemies and saved the kingdom!");
                 Thread.sleep(5000);
                 displayHighScores();
                 break;
@@ -119,6 +119,7 @@ class Index {
 
     public static void displayHighScores() throws InterruptedException, FileNotFoundException {
         File file = new File("highScores.txt");
+        List<String> highScores = new ArrayList<>();
 
         if (file.exists() && file.isFile()) {
             try(Scanner scanner = new Scanner(file)) {
@@ -126,7 +127,13 @@ class Index {
                 while (scanner.hasNextLine()) {
                     String lineOfData = scanner.nextLine();
                     if (lineOfData.contains("saved the kingdom")) {
-                        message = "High Scores: " + "\n" + lineOfData;
+                        highScores.add(lineOfData);
+                        for ( int i = 0; i < highScores.size(); i++) {
+                            if (highScores.size() > 0) {
+                                message = "\n High Scores: " + "\n";
+                                message += highScores.get(i) + "\n";
+                            };
+                        }
                     }
                 }
                 if (message != "") {
